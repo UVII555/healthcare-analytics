@@ -37,3 +37,21 @@ Stores Basic, Pro and Enterprise plans.
 
 ### hospital_subscriptions
 Links hospitals to subscription plans.
+
+
+healthcare-analytics
+│
+├── backend
+├── frontend
+├── analytics
+├── etl
+├── tests
+│
+├── docs
+│   ├── database_schema.md
+│   ├── er_diagram.drawio
+│   └── api_design.md
+│
+├── README.md
+├── requirements.txt
+└── .gitignore
