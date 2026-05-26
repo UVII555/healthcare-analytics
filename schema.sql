@@ -347,3 +347,131 @@ CREATE TABLE admissions (
         REFERENCES departments(id)
         ON DELETE CASCADE
 );
+--Table 10 — visit_records
+
+--One consultation record per appointment.
+CREATE TABLE visit_records (
+
+    id SERIAL PRIMARY KEY,
+
+    appointment_id INTEGER UNIQUE NOT NULL,
+
+    symptoms TEXT,
+
+    diagnosis TEXT,
+
+    diagnosis_code VARCHAR(20),
+
+    clinical_notes TEXT,
+
+    follow_up_date DATE,
+
+    is_locked BOOLEAN DEFAULT FALSE,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_visit_appointment
+        FOREIGN KEY (appointment_id)
+        REFERENCES appointments(id)
+        ON DELETE CASCADE
+);
+
+-- Table 11A — prescriptions
+
+-- One prescription generated during a visit.
+
+CREATE TABLE prescriptions (
+
+    id SERIAL PRIMARY KEY,
+
+    visit_id INTEGER NOT NULL,
+
+    valid_until DATE,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_prescription_visit
+        FOREIGN KEY (visit_id)
+        REFERENCES visit_records(id)
+        ON DELETE CASCADE
+);
+
+-- Table 11B — prescription_items
+
+-- Multiple medicines belong to one prescription.
+
+CREATE TABLE prescription_items (
+
+    id SERIAL PRIMARY KEY,
+
+    prescription_id INTEGER NOT NULL,
+
+    medicine_name VARCHAR(200) NOT NULL,
+
+    dosage VARCHAR(50),
+
+    frequency VARCHAR(50),
+
+    duration_days INTEGER,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_prescription_item
+        FOREIGN KEY (prescription_id)
+        REFERENCES prescriptions(id)
+        ON DELETE CASCADE
+);
+
+-- Table 12 — consent_records
+
+-- First create ENUMs.
+
+-- Consent Type
+CREATE TYPE consent_type_enum AS ENUM (
+    'OTP',
+    'REQUEST',
+    'PERMANENT',
+    'EMERGENCY'
+);
+-- Consent Status
+CREATE TYPE consent_status_enum AS ENUM (
+    'PENDING',
+    'APPROVED',
+    'DENIED',
+    'REVOKED',
+    'EXPIRED'
+);
+-- Then create table:
+CREATE TABLE consent_records (
+
+    id SERIAL PRIMARY KEY,
+
+    patient_id INTEGER NOT NULL,
+
+    doctor_id INTEGER NOT NULL,
+
+    consent_type consent_type_enum NOT NULL,
+
+    status consent_status_enum
+        DEFAULT 'PENDING',
+
+    otp_code VARCHAR(6),
+
+    otp_expires_at TIMESTAMP,
+
+    emergency_reason TEXT,
+
+    accessed_at TIMESTAMP,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_consent_patient
+        FOREIGN KEY (patient_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_consent_doctor
+        FOREIGN KEY (doctor_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE
+);

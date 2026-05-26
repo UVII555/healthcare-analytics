@@ -139,3 +139,29 @@ hospitals
 │
 ├── subscription_plans
 └── hospital_subscriptions
+
+Schema after adding table 12
+
+hospitals
+│
+├── users
+│     │
+│     └── patient_profiles
+│
+├── departments
+│
+├── appointments
+│     │
+│     └── visit_records
+│            │
+│            └── prescriptions
+│                   │
+│                   └── prescription_items
+│
+├── admissions
+│
+├── consent_records
+│
+├── subscription_plans
+│
+└── hospital_subscriptions
