@@ -102,3 +102,27 @@ CREATE TYPE user_role AS ENUM (
         REFERENCES hospitals(hospital_id)
         ON DELETE CASCADE
 );
+
+-- table 5
+CREATE TABLE departments (
+    id SERIAL PRIMARY KEY,
+
+    hospital_id BIGINT NOT NULL,
+
+    name VARCHAR(100) NOT NULL,
+
+    head_doctor_id INTEGER,
+
+    total_beds INTEGER DEFAULT 0,
+
+    floor INTEGER,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_department_hospital
+        FOREIGN KEY (hospital_id)
+        REFERENCES hospitals(hospital_id)
+        ON DELETE CASCADE
+);
+
+-- table 6
