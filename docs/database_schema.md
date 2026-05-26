@@ -55,3 +55,55 @@ healthcare-analytics
 ├── README.md
 ├── requirements.txt
 └── .gitignore
+
+
+# Healthcare Analytics Database Schema
+
+## Current Schema
+
+hospitals
+│
+├── users
+├── subscription_plans
+└── hospital_subscriptions
+
+---
+
+## After Adding Departments
+
+hospitals
+│
+├── users
+├── departments
+├── subscription_plans
+└── hospital_subscriptions
+
+---
+
+## Relationship
+
+One hospital can have many departments.
+
+Example:
+
+Apollo Delhi
+├── Cardiology
+├── ICU
+├── Emergency
+└── Orthopaedics
+
+---
+
+### hospitals → departments
+
+Relationship: One-to-Many (1:N)
+
+One hospital can contain multiple departments.
+
+Example:
+
+Hospital ID 1
+├── Cardiology
+├── ICU
+├── Orthopaedics
+└── Emergency
