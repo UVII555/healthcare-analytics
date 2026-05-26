@@ -126,3 +126,116 @@ CREATE TABLE departments (
 );
 
 -- table 6
+CREATE TABLE doctor_profiles (
+    id SERIAL PRIMARY KEY,
+
+    user_id INTEGER UNIQUE NOT NULL,
+
+    department_id INTEGER,
+
+    specialization VARCHAR(150),
+
+    qualification VARCHAR(150),
+
+    years_experience INTEGER,
+
+    consultation_fee NUMERIC(10,2),
+
+    license_number VARCHAR(100) UNIQUE,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_doctor_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_doctor_department
+        FOREIGN KEY (department_id)
+        REFERENCES departments(id)
+        ON DELETE SET NULL
+);
+-- -- table 7
+-- CREATE TABLE doctor_profiles(
+-- id SERIAL PRIMARY KEY,
+-- user_id INTEGER UNIQUE NOT NULL,
+-- departments_id INTEGER,
+-- specialization VARCHAR(150),
+-- qualification VARCHAR(150),
+-- years_experience INTEGER,
+-- registration_number INTEGER,
+-- consultation_fee NUMERIC(10,2),
+-- license_number VARCHAR(100) UNIQUE,
+-- created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+-- CONSTRAINT fk_doctor_user
+-- FOREIGN KEY (user_id)
+-- REFERENCES users(id)
+-- ON DELETE CASCADE,
+-- CONSTRAINT fk_doctor_department
+-- FOREIGN KEY (departments_id)
+-- REFERENCES departments(id)
+-- ON DELETE SET NULL);
+-- table 
+
+
+
+
+-- Table 7: patient_profiles
+
+-- First create ENUM for gender.
+
+CREATE TYPE gender_enum AS ENUM (
+    'MALE',
+    'FEMALE',
+    'OTHER'
+);
+
+-- Then create table:
+CREATE TABLE patient_profiles (
+    user_id INTEGER PRIMARY KEY,
+
+    uhid VARCHAR(20) UNIQUE NOT NULL,
+
+    date_of_birth DATE NOT NULL,
+
+    gender gender_enum NOT NULL,
+
+    blood_group VARCHAR(5),
+
+    allergies JSONB,
+
+    chronic_conditions JSONB,
+
+    emergency_contact_name VARCHAR(100),
+
+    emergency_contact_phone VARCHAR(15),
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_patient_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE
+);
+
+-- Table 8: appointments
+
+-- Create ENUMs first.
+
+-- Appointment Status
+
+CREATE TYPE appointment_status AS ENUM (
+    'SCHEDULED',
+    'CHECKED_IN',
+    'IN_PROGRESS',
+    'COMPLETED',
+    'CANCELLED',
+    'NO_SHOW'
+);
+
+--Appointment Type
+CREATE TYPE appointment_type_enum AS ENUM (
+    'OPD',
+    'EMERGENCY',
+    'FOLLOW_UP'
+);

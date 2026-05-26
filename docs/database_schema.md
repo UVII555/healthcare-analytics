@@ -106,4 +106,21 @@ Hospital ID 1
 ├── Cardiology
 ├── ICU
 ├── Orthopaedics
-└── Emergency
+└── Emergencys
+
+
+hospitals
+│
+├── users
+│   │
+│   ├── patient_profiles
+│   └── doctor_profiles (later)
+│
+├── departments
+│   │
+│   ├── appointments
+│   ├── admissions
+│   └── visit_records
+│
+├── subscription_plans
+└── hospital_subscriptions
