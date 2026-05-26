@@ -239,3 +239,111 @@ CREATE TYPE appointment_type_enum AS ENUM (
     'EMERGENCY',
     'FOLLOW_UP'
 );
+
+-- Then create table:
+CREATE TABLE appointments (
+
+    id SERIAL PRIMARY KEY,
+
+    hospital_id BIGINT NOT NULL,
+
+    patient_id INTEGER NOT NULL,
+
+    doctor_id INTEGER NOT NULL,
+
+    department_id INTEGER NOT NULL,
+
+    appointment_date DATE NOT NULL,
+
+    time_slot TIME NOT NULL,
+
+    token_number INTEGER,
+
+    booked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    check_in_time TIMESTAMP,
+
+    doctor_start_time TIMESTAMP,
+
+    consultation_end_time TIMESTAMP,
+
+    status appointment_status
+        DEFAULT 'SCHEDULED',
+
+    appointment_type appointment_type_enum
+        DEFAULT 'OPD',
+
+    chief_complaint TEXT,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_appointment_hospital
+        FOREIGN KEY (hospital_id)
+        REFERENCES hospitals(hospital_id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_appointment_patient
+        FOREIGN KEY (patient_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_appointment_doctor
+        FOREIGN KEY (doctor_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_appointment_department
+        FOREIGN KEY (department_id)
+        REFERENCES departments(id)
+        ON DELETE CASCADE
+);
+
+--table 9  Create admissions table
+CREATE TABLE admissions (
+
+    id SERIAL PRIMARY KEY,
+
+    hospital_id BIGINT NOT NULL,
+
+    patient_id INTEGER NOT NULL,
+
+    doctor_id INTEGER NOT NULL,
+
+    department_id INTEGER NOT NULL,
+
+    admission_date TIMESTAMP NOT NULL,
+
+    discharge_date TIMESTAMP,
+
+    diagnosis_code VARCHAR(20),
+
+    diagnosis_group VARCHAR(50),
+
+    treatment_cost NUMERIC(10,2),
+
+    readmitted BOOLEAN DEFAULT FALSE,
+
+    readmission_days INTEGER,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_admission_hospital
+        FOREIGN KEY (hospital_id)
+        REFERENCES hospitals(hospital_id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_admission_patient
+        FOREIGN KEY (patient_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_admission_doctor
+        FOREIGN KEY (doctor_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_admission_department
+        FOREIGN KEY (department_id)
+        REFERENCES departments(id)
+        ON DELETE CASCADE
+);

@@ -124,3 +124,18 @@ hospitals
 │
 ├── subscription_plans
 └── hospital_subscriptions
+
+
+Relationship after adding admissions
+hospitals
+│
+├── users
+│     ├── patient_profiles
+│     └── doctors
+│
+├── departments
+│     ├── appointments
+│     └── admissions
+│
+├── subscription_plans
+└── hospital_subscriptions
