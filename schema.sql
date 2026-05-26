@@ -1,3 +1,4 @@
+-- table 1
 CREATE TABLE hospitals (
     hospital_id BIGSERIAL PRIMARY KEY,
     hospital_name VARCHAR(200) NOT NULL,
@@ -26,7 +27,7 @@ CREATE TYPE user_role AS ENUM (
     'LAB_TECH',
     'PATIENT'
 );
-
+-- table 2
 CREATE TABLE subscription_plans (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
@@ -36,7 +37,7 @@ CREATE TABLE subscription_plans (
     feature_flags JSON
 );
 
--- //hospital_subscriptions
+-- //hospital_subscriptions table 3
 CREATE TABLE hospital_subscriptions (
     id SERIAL PRIMARY KEY,
 
@@ -74,7 +75,7 @@ CREATE TYPE user_role AS ENUM (
     'LAB_TECH',
     'PATIENT'
 );
- --USERS table
+ --USERS table table 4
 
  CREATE TABLE users (
 
