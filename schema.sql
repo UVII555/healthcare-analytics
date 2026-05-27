@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict AI9tGIcApVC6NugVTVrXF5EhfhjZHbxCmVMvV1hZqHZI0jZZGb0c6dpQSdOxeLB
+\restrict SsboDeAgK7KvQDe8ykgb8oT1IEAPV6yj2eIBcPDwhgHNhay7JM946hPh8z97TRt
 
 -- Dumped from database version 16.14 (Homebrew)
 -- Dumped by pg_dump version 16.14 (Homebrew)
@@ -265,15 +265,16 @@ CREATE TABLE public.appointments (
     doctor_id integer NOT NULL,
     department_id integer NOT NULL,
     time_slot time without time zone NOT NULL,
-    tokem_number integer,
+    token_number integer,
     booked_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     check_in_time timestamp without time zone,
     doctor_start_time timestamp without time zone,
-    consultant_end_time timestamp without time zone,
+    consultation_end_time timestamp without time zone,
     status public.appointment_status DEFAULT 'SCHEDULED'::public.appointment_status,
     appointment_type public.appointment_type_enum DEFAULT 'OPD'::public.appointment_type_enum,
     chief_complaint text,
-    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    appointment_date date DEFAULT CURRENT_DATE NOT NULL
 );
 
 
@@ -1148,6 +1149,69 @@ ALTER TABLE ONLY public.visit_records
 
 
 --
+-- Name: idx_appointments_booked_at; Type: INDEX; Schema: public; Owner: utsavsingh
+--
+
+CREATE INDEX idx_appointments_booked_at ON public.appointments USING btree (booked_at);
+
+
+--
+-- Name: idx_appointments_date; Type: INDEX; Schema: public; Owner: utsavsingh
+--
+
+CREATE INDEX idx_appointments_date ON public.appointments USING btree (appointment_date);
+
+
+--
+-- Name: idx_appointments_department; Type: INDEX; Schema: public; Owner: utsavsingh
+--
+
+CREATE INDEX idx_appointments_department ON public.appointments USING btree (department_id);
+
+
+--
+-- Name: idx_appointments_doctor; Type: INDEX; Schema: public; Owner: utsavsingh
+--
+
+CREATE INDEX idx_appointments_doctor ON public.appointments USING btree (doctor_id);
+
+
+--
+-- Name: idx_appointments_hospital; Type: INDEX; Schema: public; Owner: utsavsingh
+--
+
+CREATE INDEX idx_appointments_hospital ON public.appointments USING btree (hospital_id);
+
+
+--
+-- Name: idx_appointments_patient; Type: INDEX; Schema: public; Owner: utsavsingh
+--
+
+CREATE INDEX idx_appointments_patient ON public.appointments USING btree (patient_id);
+
+
+--
+-- Name: idx_appointments_status; Type: INDEX; Schema: public; Owner: utsavsingh
+--
+
+CREATE INDEX idx_appointments_status ON public.appointments USING btree (status);
+
+
+--
+-- Name: idx_department_hospital; Type: INDEX; Schema: public; Owner: utsavsingh
+--
+
+CREATE INDEX idx_department_hospital ON public.departments USING btree (hospital_id);
+
+
+--
+-- Name: idx_users_hospital; Type: INDEX; Schema: public; Owner: utsavsingh
+--
+
+CREATE INDEX idx_users_hospital ON public.users USING btree (hospital_id);
+
+
+--
 -- Name: admission_analytics fk_aa_hospital; Type: FK CONSTRAINT; Schema: public; Owner: utsavsingh
 --
 
@@ -1335,5 +1399,5 @@ ALTER TABLE ONLY public.visit_records
 -- PostgreSQL database dump complete
 --
 
-\unrestrict AI9tGIcApVC6NugVTVrXF5EhfhjZHbxCmVMvV1hZqHZI0jZZGb0c6dpQSdOxeLB
+\unrestrict SsboDeAgK7KvQDe8ykgb8oT1IEAPV6yj2eIBcPDwhgHNhay7JM946hPh8z97TRt
 
