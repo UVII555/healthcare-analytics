@@ -2,20 +2,7 @@
 
 ## Current Architecture
 
-```text
-hospitals
-    │
-    ├── users
-    │      ├── SUPER_ADMIN
-    │      ├── HOSPITAL_ADMIN
-    │      ├── DOCTOR
-    │      ├── LAB_TECH
-    │      └── PATIENT
-    │
-    ├── hospital_subscriptions
-    │
-    └── subscription_plans
-```
+
 
 ## Description
 
@@ -59,71 +46,10 @@ healthcare-analytics
 
 # Healthcare Analytics Database Schema
 
-## Current Schema
 
-hospitals
-│
-├── users
-├── subscription_plans
-└── hospital_subscriptions
 
 ---
 
-## After Adding Departments
-
-hospitals
-│
-├── users
-├── departments
-├── subscription_plans
-└── hospital_subscriptions
-
----
-
-## Relationship
-
-One hospital can have many departments.
-
-Example:
-
-Apollo Delhi
-├── Cardiology
-├── ICU
-├── Emergency
-└── Orthopaedics
-
----
-
-### hospitals → departments
-
-Relationship: One-to-Many (1:N)
-
-One hospital can contain multiple departments.
-
-Example:
-
-Hospital ID 1
-├── Cardiology
-├── ICU
-├── Orthopaedics
-└── Emergencys
-
-
-hospitals
-│
-├── users
-│   │
-│   ├── patient_profiles
-│   └── doctor_profiles (later)
-│
-├── departments
-│   │
-│   ├── appointments
-│   ├── admissions
-│   └── visit_records
-│
-├── subscription_plans
-└── hospital_subscriptions
 
 
 Relationship after adding admissions
@@ -139,6 +65,8 @@ hospitals
 │
 ├── subscription_plans
 └── hospital_subscriptions
+
+
 
 Schema after adding table 12
 hospitals
@@ -539,3 +467,124 @@ Hospital
             └── Subscription Plans
 
 Audit Logs track activity across everything.
+
+
+
+
+
+
+project currently looks like
+healthcare-analytics
+│
+├── README.md
+│
+├── Backend
+│   ├── middleware
+│   │    └── tenant.py
+│   │
+│   ├── models
+│   │    ├── hospital.py
+│   │    └── appointment.py
+│   │
+│   └── routers
+│        ├── appointments.py
+│        └── medical_records.py
+│
+├── analytics
+│   ├── data_mart
+│   │    └── admission_analytics.py
+│   │
+│   ├── engine
+│   │    ├── kpi_engine.py
+│   │    ├── forecasting.py
+│   │    ├── risk_scoring.py
+│   │    ├── anomaly_detection.py
+│   │    ├── benchmarking.py
+│   │    └── data_quality.py
+│   │
+│   ├── notebooks
+│   │    ├── 01_eda_exploration.ipynb
+│   │    ├── 02_kpi_validation.ipynb
+│   │    ├── 03_forecasting_model.ipynb
+│   │    ├── 04_readmission_analysis.ipynb
+│   │    └── 05_seasonal_patterns.ipynb
+│   │
+│   └── snapshots
+│        └── snapshot_job.py
+│
+├── frontend
+│   └── admin_dashboard
+│        ├── index.html
+│        ├── forecasting.html
+│        └── reports.html
+│
+├── tests
+│   ├── test_api.py
+│   ├── test_forecasting.py
+│   └── test_kpi_engine.py
+│
+├── schema.sql
+│
+└── docs
+     ├── README.md
+     └── database_schema.md
+
+
+
+
+
+     Database schema completed
+
+
+
+hospitals
+users
+subscription_plans
+hospital_subscriptions
+departments
+doctor_profiles
+patient_profiles
+appointments
+admissions
+visit_records
+prescriptions
+prescription_items
+consent_records
+kpi_snapshots
+admission_analytics
+notifications
+audit_logs
+Current ER relationship
+hospitals
+│
+├── users
+│      │
+│      ├── doctor_profiles
+│      │
+│      └── patient_profiles
+│
+├── departments
+│
+├── appointments
+│      │
+│      └── visit_records
+│             │
+│             └── prescriptions
+│                     │
+│                     └── prescription_items
+│
+├── admissions
+│
+├── consent_records
+│
+├── notifications
+│
+├── audit_logs
+│
+├── kpi_snapshots
+│
+├── admission_analytics
+│
+└── hospital_subscriptions
+        │
+        └── subscription_plans
