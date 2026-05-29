@@ -216,6 +216,13 @@ The operational modules generate data, the ETL pipeline cleans and organizes it,
 
 ---
 
+## Diagrams
+
+- [Flow charts](./flow_charts.md) - startup flow, request flow, and architecture flow diagrams.
+- [Database schema](./database_schema.md) - table-by-table schema reference.
+
+---
+
 ## Current Progress
 
 ### Completed
