@@ -15,7 +15,7 @@ from jose import JWTError, jwt
 
 from passlib.context import CryptContext
 # passlib = password hashing library
-# CryptContext = manages which hashing algorithm to use
+# CryptContext = manages which hashing algorithm to use (bcrypt) and how to verify
 
 from fastapi import Depends, HTTPException, status
 # Depends = FastAPI's dependency injection system
@@ -26,7 +26,7 @@ from fastapi.security import OAuth2PasswordBearer
 # OAuth2PasswordBearer = FastAPI reads JWT from "Authorization: Bearer <token>" header
 
 from config import settings
-# Our config.py — gets SECRET_KEY and ALGORITHM
+# Our config.py — gets SECRET_KEY and ALGORITHM 
 
 
 # ── PASSWORD HASHING SETUP ──────────────────────────────────
