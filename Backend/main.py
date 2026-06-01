@@ -13,3 +13,17 @@ app=FastAPI(
 @app.get("/")
 def root():
     return {"message": "Welcome to the Hospital Management System API!"}    
+
+
+
+# In backend/main.py — ADD these 2 lines
+# (add import near top, include_router inside the file)
+
+from routers import auth
+# This imports your new auth router file
+
+# THEN add this line AFTER you create the `app` variable:
+app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
+# prefix="/api/auth" = all auth routes start with /api/auth
+# So POST /register becomes POST /api/auth/register
+# tags=["Authentication"] = groups endpoints in Swagger UI
