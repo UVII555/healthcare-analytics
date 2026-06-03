@@ -27,3 +27,11 @@ app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 # prefix="/api/auth" = all auth routes start with /api/auth
 # So POST /register becomes POST /api/auth/register
 # tags=["Authentication"] = groups endpoints in Swagger UI
+
+
+
+# AFTER MIDDLEWARE/tenant.py and routers/patient.py
+
+
+from routers import patients
+app.include_router(patient.router,prefix="/api/patients", tags=["Patients"])
