@@ -35,3 +35,9 @@ app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 
 from routers import patients
 app.include_router(patient.router,prefix="/api/patients", tags=["Patients"])
+
+
+from routers import appointments 
+app.include_router(appointment.router,prefix="/api/appointments", tags"[Appointments]")
+
+
