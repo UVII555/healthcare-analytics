@@ -58,7 +58,8 @@ def complete(appt_id: int, current_user = Depends(get_current_user), db: Session
     appt.consultation_end_time = datetime.utcnow()  # duration = end - start
     appt.status = "COMPLETED"
     db.commit()
-    return {"message": "Completed"
+    return {"message": "Completed"}
+
 
 @router.get("/{appt_id}/queue")
 def queue_position(appt_id: int, current_user = Depends(get_current_user), db: Session = Depends(get_db)):
