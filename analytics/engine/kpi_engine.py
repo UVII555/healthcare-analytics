@@ -11,5 +11,4 @@ def compute_also(db: Session, hospital_id: int)-> float:
     return round (float(r or 0), 2)
 
 
-def compute_awt(db: Session.hospital_id: int)-> float:
-    
+def compute_awt(db: Session.hospital_id: int)-> float
