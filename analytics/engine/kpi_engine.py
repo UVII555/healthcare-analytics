@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 
 from sqlalchemy import text
 
-def compute_also(db: Session, hospital_id: int)-> float:
+def compute_alos(db: Session, hospital_id: int)-> float:
     """Average Length of Stays in days"""
     
     r = db.execute(text("""
