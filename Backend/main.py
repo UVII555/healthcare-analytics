@@ -45,4 +45,4 @@ app.include_router(appointment.router,prefix="/api/appointments", tags"[Appointm
 
 app.include_router(user_router)
 app.include_router(auth_router)
-app.include_router(kpi_router)
+app.include_router(kpi_router
