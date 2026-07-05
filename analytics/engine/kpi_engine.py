@@ -13,5 +13,5 @@ def compute_alos(db: Session, hospital_id: int)-> float:
 
 def compute_awt(db: Session.hospital_id: int)-> float:
     """Average Wait Time in minutes"""
-    r=db.execute(text(""
+    r=db.execute(text("""
     SELECT AVG(EXTRACT(epoch) ))
