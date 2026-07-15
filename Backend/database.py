@@ -1,17 +1,23 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 # Import your centralized settings framework
-from config import settings 
+from .config import settings 
+
 
 # 1. Create the engine using your pydantic-settings configuration
 # 'echo=True' will print every raw SQL query to your terminal (great for learning!)
 engine = create_engine(settings.DATABASE_URL, echo=True)
 
+
+
 # 2. Create your session factory factory binded to the engine
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+
 # 3. Create the Base class that your 16 models inherit from
 Base = declarative_base()
+
+
 
 # 4. THE FIX: The missing dependency generator that routers/auth.py is looking for
 def get_db():
