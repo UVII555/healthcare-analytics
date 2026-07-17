@@ -23,17 +23,17 @@ def compute_awt(db: Session, hospital_id: int)-> float:
     return round(float(r or 0), 1)
 
 
-def compute_opd_load(db: Session, hospital_id: int) -> dict:
+def compute_opd_load(db: Session, hospital_id: int) -> float:
     """" Daily appointment count - last 30 days""" 
     rows = db.execute(text("""
-                           SELECT appoinment_date::text, COUNT(*) FROM appointments
+                           SELECT appointment_date::text, COUNT(*) FROM appointments
                            WHERE hospital_id = :hid AND status = 'COMPLETED'
                            GROUP BY appointment_date ORDER BY appointment_date DESC LIMIT 30"""), 
                            {"hid": hospital_id}).fetchall()
     return {r[0]: r[1] for r in rows}
 
 
-def compute_rar(db: Session, hospital_id:int) -> dict:
+def compute_rar(db: Session, hospital_id:int) -> float:
     """ 30-days Re-admission Rate %"""
     r = db.execute(text("""
         SELECT Round(100.0* SUM (CASE WHEN readmitted THEN 1 ELSE 0 END)/NULLIF(COUNT(*),0),2)
@@ -42,3 +42,22 @@ def compute_rar(db: Session, hospital_id:int) -> dict:
         ), {"hid":hospital_id}).scalar()
     return float (r or 0)
 
+def compute_drg_mix(db: Session, hospital_id: int) -> dict:
+    """Diagnosis mix — count by ICD-10 category"""
+    rows = db.execute(text("""
+        SELECT LEFT(icd10_code, 1) as category, COUNT(*) as count
+        FROM admissions
+        WHERE hospital_id = :hid AND icd10_code IS NOT NULL
+        GROUP BY LEFT(icd10_code, 1)
+        ORDER BY count DESC
+    """), {"hid": hospital_id}).fetchall()
+
+    label_map = {
+        "A":"Infectious", "C":"Cancer", "I":"Cardiac",
+        "J":"Respiratory", "K":"Digestive", "M":"Orthopaedic",
+        "N":"Urinary", "S":"Injury"
+    }
+    return {
+        "labels": [label_map.get(r[0], r[0]) for r in rows],
+        "data": [r[1] for r in rows]
+    }
