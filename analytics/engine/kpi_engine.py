@@ -7,7 +7,7 @@ def compute_alos(db: Session, hospital_id: int)-> float:
     
     r = db.execute(text("""
     SELECT AVG(EXTRACT(epoch FROM (discharge_date - admission_date)) / 86400)
-    FROM admission WHERE hospital_id = :hid AND discharge_date IS NOT NULL"""), {"hid": hospital_id}).scalar()
+    FROM admissions WHERE hospital_id = :hid AND discharge_date IS NOT NULL"""), {"hid": hospital_id}).scalar()
     return round (float(r or 0), 2)
 
 
@@ -24,13 +24,20 @@ def compute_awt(db: Session, hospital_id: int)-> float:
 
 
 def compute_opd_load(db: Session, hospital_id: int) -> dict:
-    """" Daily appointment count - last 30 days"""
+    """" Daily appointment count - last 30 days""" 
     rows = db.execute(text("""
-                           SELECT appoinments_date::text, COUNT(*) FROM appointments
-                           WHERE hospital_id =: hid AND status = 'COMPLETED'
-                           GROUP BY appointments_date ORDER BY appointments_date DESC LIMIT 30"""), 
+                           SELECT appoinment_date::text, COUNT(*) FROM appointments
+                           WHERE hospital_id = : hid AND status = 'COMPLETED'
+                           GROUP BY appointment_date ORDER BY appointment_date DESC LIMIT 30"""), 
                            {"hid": hospital_id}).fetchall()
     return {r[0]: r[1] for r in rows}
 
 
-#def compute_
+def compute_rar(db: Session, hospital_id:int) -> dict:
+    """ 30-days Re-admission Rate %"""
+    r = db.execute(text("""
+        SELECT Round(100.0* SUM (CASE WHEN readmitted THEN 1 ELSE 0 END)/NULLIF(COUNT(*),0),2)
+        FROM admissions WHERE hospital_id =: hid
+        """
+        ), {"hid":hospital_id}).scalar()
+    return float (r or 0)
