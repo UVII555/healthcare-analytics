@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-
+from backend.database import SessionLocal
 from sqlalchemy import text
 
 def compute_alos(db: Session, hospital_id: int)-> float:
