@@ -38,7 +38,7 @@ app.include_router(patient.router,prefix="/api/patients", tags=["Patients"])
 
 
 from routers import appointments 
-app.include_router(appointment.router,prefix="/api/appointments", tags"[Appointments]")
+app.include_router(appointment.router,prefix="/api/appointments", tags="[Appointments]")
   
 
   #to connect all files to main.py
