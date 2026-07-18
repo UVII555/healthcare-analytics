@@ -7,7 +7,7 @@ Usage:
 
 from sqlalchemy.orm import Session
 
-from database import SessionLocal
+from backend.database import SessionLocal
 
 
 def seed(session: Session) -> None:
