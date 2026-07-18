@@ -4,7 +4,7 @@ from sqlalchemy import Column, Date, DateTime, ForeignKey, Integer, JSON, Numeri
 from sqlalchemy.dialects.postgresql import ENUM
 from sqlalchemy.sql import func
 
-from database import Base
+from backend.database import Base
 
 
 class SubscriptionStatus(str, enum.Enum):
