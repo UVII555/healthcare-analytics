@@ -4,7 +4,7 @@ from sqlalchemy import BigInteger, Boolean, Column, DateTime, ForeignKey, Intege
 from sqlalchemy.dialects.postgresql import ENUM
 from sqlalchemy.sql import func
 
-from database import Base
+from backend.database import Base
 
 
 class UserRole(str, enum.Enum):

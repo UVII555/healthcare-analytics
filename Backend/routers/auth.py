@@ -5,8 +5,8 @@
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import get_db
-from models.user import User
+from backend.database import get_db
+from backend.models.user import User
 # ↑ change "user" to whatever your User model file is named
 from schemas.auth import RegisterRequest, LoginRequest, TokenResponse
 from services.auth_service import (

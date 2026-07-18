@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import get_db
+from backend.database import get_db
 from models.appointment import Appointment
 from services.auth_service import get_current_user
 from datetime import datetime, date

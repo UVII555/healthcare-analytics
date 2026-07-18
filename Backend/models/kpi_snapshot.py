@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Numeric, DateTime, Date, ForeignKey, Index
 from sqlalchemy.sql import func
 
-from database import Base
+from backend.database import Base
 
 
 class KPISnapshot(Base):
