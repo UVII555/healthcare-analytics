@@ -1,7 +1,7 @@
 from sqlalchemy import BigInteger, Boolean, Column, DateTime, ForeignKey, Integer, Numeric, String
 from sqlalchemy.sql import func
 
-from database import Base
+from backend.database import Base
 
 
 class Admission(Base):

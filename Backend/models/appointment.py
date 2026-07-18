@@ -4,7 +4,7 @@ from sqlalchemy import BigInteger, Column, Date, DateTime, ForeignKey, Integer, 
 from sqlalchemy.dialects.postgresql import ENUM
 from sqlalchemy.sql import func
 
-from database import Base
+from backend.database import Base
 
 
 class AppointmentStatus(str, enum.Enum):

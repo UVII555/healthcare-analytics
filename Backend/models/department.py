@@ -1,7 +1,7 @@
 from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.sql import func
 
-from database import Base
+from backend.database import Base
 
 
 class Department(Base):

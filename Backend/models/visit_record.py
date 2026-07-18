@@ -1,10 +1,10 @@
 from sqlalchemy import Boolean, Column, Date, DateTime, ForeignKey, Integer, String, Text
 from sqlalchemy.sql import func
 
-from database import Base
+from backend.database import Base
 
 
-class VisitRecord(Base):
+class VisitRecord(Base):   
     __tablename__ = "visit_records"
 
     id = Column(Integer, primary_key=True, index=True)

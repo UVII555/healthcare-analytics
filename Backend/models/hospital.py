@@ -4,7 +4,7 @@ from sqlalchemy import BigInteger, Boolean, Column, DateTime, Integer, String, T
 from sqlalchemy.dialects.postgresql import ENUM
 from sqlalchemy.sql import func
 
-from database import Base
+from backend.database import Base
 
 
 class HospitalType(str, enum.Enum):
