@@ -1,6 +1,6 @@
 
 from fastapi import Depends, HTTPException
-from services.auth_service import get_current_user
+from backend.services.auth_service import get_current_user
 
 def get_hospital_id(current_user = Depends(get_current_user)) -> int:
     hospital_id = current_user.get("hospital_id")
