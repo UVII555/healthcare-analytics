@@ -12,16 +12,16 @@ import random
 from faker import Faker
 from sqlalchemy import select
 
-from database import SessionLocal
-from models.hospital import Hospital
-from models.user import User
-from models.subscription import SubscriptionPlan, HospitalSubscription
-from models.department import Department
-from models.doctor import DoctorProfile
-from models.patient import PatientProfile
-from models.appointment import Appointment
-from models.admission import Admission
-from models.visit_record import VisitRecord
+from backend.database import SessionLocal
+from backend.models.hospital import Hospital
+from backend.models.user import User
+from backend.models.subscription import SubscriptionPlan, HospitalSubscription
+from backend.models.department import Department
+from backend.models.doctor import DoctorProfile
+from backend.models.patient import PatientProfile
+from backend.models.appointment import Appointment
+from backend.models.admission import Admission
+from backend.models.visit_record import VisitRecord
 
 
 fake = Faker("en_IN")  # Indian locale — generates Indian names/phones
