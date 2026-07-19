@@ -57,7 +57,7 @@ from backend.models import kpi_snapshot  # Table 13
 from backend.models import admission_analytics  # Table 14
 from backend.models import notification  # Table 15
 from backend.models import audit_log  # Table 16
-
+from backend.models import hospital
 # Import routers from the routers package
 from backend.routers import auth
 from backend.routers import patients

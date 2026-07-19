@@ -3,6 +3,9 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 # Import your centralized settings framework
 from .config import settings 
 
+# Make sure BOTH models are imported so SQLAlchemy maps their relationships
+# from backend.models.hospital import Hospital  # Adjust path to your actual file
+# from backend.models.user import User
 
 # 1. Create the engine using your pydantic-settings configuration
 # 'echo=True' will print every raw SQL query to your terminal (great for learning!)
