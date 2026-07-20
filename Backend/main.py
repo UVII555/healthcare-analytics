@@ -81,4 +81,11 @@ app.include_router(patients.router, prefix="/api/patients", tags=["Patients"])
 app.include_router(appointments.router, prefix="/api/appointments", tags=["Appointments"])
 
 # If you have an analytics/KPI router endpoint, uncomment below:
-# app.include_router(analytics.router, prefix="/api/analytics", tags=["Analytics"])
+# from backend.models import analytics 
+# from backend.models import admission_analytics
+# app.include_router(admission_analytics.router, prefix="/api/analytics", tags=["Analytics"])
+
+
+from backend.routers import analytics
+
+app.include_router(analytics.router, prefix="/api/analytics", tags=["Analytics"])
