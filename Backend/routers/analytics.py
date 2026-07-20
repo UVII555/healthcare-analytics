@@ -15,7 +15,7 @@ def get_kpis(hospital_id:  int= 1, db: Session = Depends(get_db)):
     return{
         "alos_days": compute_alos(db,hospital_id),
         "alos_minutes":compute_awt(db,hospital_id),
-        "rar_percent":compute_rar(db,compute_rar)
+        "rar_percent":compute_rar(db,hospital_id)
     }
 
 @router.get("/opd-trend")
