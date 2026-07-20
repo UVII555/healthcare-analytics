@@ -62,8 +62,9 @@ from backend.models import hospital
 from backend.routers import auth
 from backend.routers import patients
 from backend.routers import appointments
-# If you have a KPI/analytics router, import it here:
-# from routers import analytics 
+
+# If KPI/analytics router completed , import it here:
+from backend.routers import analytics 
 
 app = FastAPI(
     title="MedConnect API",
@@ -84,8 +85,8 @@ app.include_router(appointments.router, prefix="/api/appointments", tags=["Appoi
 # from backend.models import analytics 
 # from backend.models import admission_analytics
 # app.include_router(admission_analytics.router, prefix="/api/analytics", tags=["Analytics"])
+# app.include_router(analytics.router)
 
+#from backend.routers import analytics
 
-from backend.routers import analytics
-
-app.include_router(analytics.router, prefix="/api/analytics", tags=["Analytics"])
+app.include_router(analytics.router)

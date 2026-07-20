@@ -1,4 +1,4 @@
-from fastapi import FastAPIRouter , Models
+from fastapi import APIRouter , Depends
 from sqlalchemy.orm import Session
 from backend.database import get_db
 from analytics.engine.kpi_engine import (compute_alos,
@@ -7,8 +7,8 @@ compute_awt,
 compute_drg_mix,
 compute_opd_load
 )
-router = APIROUTER(prefix="/api/analytics", tags=["Analytics"])
-
+# router = APIRouter(prefix="/api/analytics", tags=["Analytics"])
+router = APIRouter(prefix="/api/analytics", tags=["Analytics"])
 
 @router.get("/kpis")
 def get_kpis(hospital_id:  int= 1, db: Session = Depends(get_db)):
