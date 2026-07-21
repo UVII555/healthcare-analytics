@@ -45,10 +45,10 @@ def compute_rar(db: Session, hospital_id:int) -> float:
 def compute_drg_mix(db: Session, hospital_id: int) -> dict:
     """Diagnosis mix — count by ICD-10 category"""
     rows = db.execute(text("""
-        SELECT LEFT(icd10_code, 1) as category, COUNT(*) as count
+        SELECT LEFT(diagnosis_code, 1) as category, COUNT(*) as count
         FROM admissions
-        WHERE hospital_id = :hid AND icd10_code IS NOT NULL
-        GROUP BY LEFT(icd10_code, 1)
+        WHERE hospital_id = :hid AND diagnosis_code IS NOT NULL
+        GROUP BY LEFT(diagnosis_code, 1)
         ORDER BY count DESC
     """), {"hid": hospital_id}).fetchall()
 

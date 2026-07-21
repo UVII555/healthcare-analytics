@@ -3,7 +3,8 @@
 # WHY: FastAPI validates ALL incoming JSON against these schemas.
 # Wrong data type = automatic 422 error with clear message.
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
+from backend.models.user import UserRole
 # BaseModel = base class for all Pydantic schemas
 # EmailStr = validates that the string is a valid email format
 
@@ -13,10 +14,10 @@ from typing import Optional
 class RegisterRequest(BaseModel):
     """Shape of the JSON body for POST /register"""
     email:       EmailStr        # validates email format automatically
-    password:    str             # plain text — we hash it in the router
+    password:    str = Field(min_length=8)
     full_name:   str
-    role:        str = "PATIENT"    # default = patient if not specified
-    hospital_id: Optional[int] = None  # None for super admins
+    role:        UserRole = UserRole.PATIENT
+    hospital_id: Optional[int] = None
 
 
 class LoginRequest(BaseModel):

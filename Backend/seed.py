@@ -22,13 +22,31 @@ from backend.models.patient import PatientProfile
 from backend.models.appointment import Appointment
 from backend.models.admission import Admission
 from backend.models.visit_record import VisitRecord
+from backend.services.auth_service import hash_password
 
 
 fake = Faker("en_IN")  # Indian locale — generates Indian names/phones
 
 
 def fake_hash(raw: str) -> str:
-    return f"seeded::{raw}"
+    return hash_password(raw)
+
+
+def upgrade_seeded_passwords() -> None:
+    db = SessionLocal()
+    try:
+        updated = 0
+        while True:
+            users = db.query(User).filter(User.hashed_password.like("seeded::%")).limit(25).all()
+            if not users:
+                break
+            for user in users:
+                user.hashed_password = hash_password(user.hashed_password.split("::", 1)[1])
+                updated += 1
+            db.commit()
+        print(f"Updated {updated} seeded password hashes")
+    finally:
+        db.close()
 
 
 def run_seed() -> None:
@@ -298,4 +316,9 @@ def run_seed() -> None:
 
 
 if __name__ == "__main__":
-    run_seed()
+    import sys
+
+    if "--upgrade-passwords" in sys.argv:
+        upgrade_seeded_passwords()
+    else:
+        run_seed()

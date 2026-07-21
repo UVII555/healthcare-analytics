@@ -4,9 +4,12 @@
 # All logic (hashing, JWT creation) is in auth_service.py
 
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import IntegrityError
 from backend.database import get_db
-from backend.models.user import User
+from backend.models.hospital import Hospital
+from backend.models.user import User, UserRole
 # ↑ change "user" to whatever your User model file is named
 from backend.schemas.auth import RegisterRequest, LoginRequest, TokenResponse
 from backend.services.auth_service import (
@@ -38,18 +41,29 @@ def register(
             detail="This email is already registered. Please login instead."
         )
 
-    # Step 2: Create user with hashed password (NEVER store plain password)
+    if request.role != UserRole.SUPER_ADMIN and request.hospital_id is None:
+        raise HTTPException(status_code=422, detail="A hospital_id is required for this role")
+
+    if request.hospital_id is not None:
+        hospital = db.get(Hospital, request.hospital_id)
+        if not hospital or not hospital.is_active:
+            raise HTTPException(status_code=404, detail="Hospital not found or inactive")
+
     user = User(
         email=request.email,
         hashed_password=hash_password(request.password),
         full_name=request.full_name,
-        role=request.role,
+        role=request.role.value,
         hospital_id=request.hospital_id,
         is_active=True
     )
-    db.add(user)       # stage for insertion
-    db.commit()        # write to PostgreSQL
-    db.refresh(user)   # reload from DB to get the auto-generated id
+    db.add(user)
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=409, detail="Unable to register this user")
+    db.refresh(user)
 
     # Step 3: Create JWT token with user info in payload
     token = create_access_token({
@@ -96,6 +110,17 @@ def login(
         "hospital_id": user.hospital_id
     })
     return {"access_token": token, "token_type": "bearer"}
+
+
+@router.post("/token", response_model=TokenResponse)
+def issue_token(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    db: Session = Depends(get_db)
+):
+    return login(
+        LoginRequest(email=form_data.username, password=form_data.password),
+        db
+    )
 
 
 @router.get("/me")

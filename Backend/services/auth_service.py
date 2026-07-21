@@ -14,6 +14,7 @@ from jose import JWTError, jwt
 # jwt.decode() = reads and verifies a token string
 
 from passlib.context import CryptContext
+from passlib.exc import UnknownHashError
 # passlib = password hashing library
 # CryptContext = manages which hashing algorithm to use (bcrypt) and how to verify
 
@@ -25,7 +26,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 # OAuth2PasswordBearer = FastAPI reads JWT from "Authorization: Bearer <token>" header
 
-from config import settings
+from backend.config import settings
 # Our config.py — gets SECRET_KEY and ALGORITHM 
 
 
@@ -36,7 +37,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # ── JWT SETUP ───────────────────────────────────────────────
 # tokenUrl = the URL path where users get tokens (used by Swagger UI)
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/token")
 
 
 def hash_password(plain_password: str) -> str:
@@ -56,7 +57,10 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     Returns True if they match, False otherwise.
     Used during login to verify what the user typed.
     """
-    return pwd_context.verify(plain_password, hashed_password)
+    try:
+        return pwd_context.verify(plain_password, hashed_password)
+    except (UnknownHashError, ValueError):
+        return False
     # verify() re-applies bcrypt to plain_password and compares
     # It knows how to handle the salt automatically
 

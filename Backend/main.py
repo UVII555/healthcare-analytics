@@ -62,6 +62,7 @@ from backend.models import hospital
 from backend.routers import auth
 from backend.routers import patients
 from backend.routers import appointments
+from backend.routers import lookups
 
 # If KPI/analytics router completed , import it here:
 from backend.routers import analytics 
@@ -80,6 +81,7 @@ def root():
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(patients.router, prefix="/api/patients", tags=["Patients"])
 app.include_router(appointments.router, prefix="/api/appointments", tags=["Appointments"])
+app.include_router(lookups.router)
 
 # If you have an analytics/KPI router endpoint, uncomment below:
 # from backend.models import analytics 
