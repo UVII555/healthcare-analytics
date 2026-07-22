@@ -37,3 +37,20 @@ class UserResponse(BaseModel):
     user_id:     int
     role:        str
     hospital_id: Optional[int]
+
+
+# backend/schemas/auth.py mein
+from enum import Enum
+
+class UserRole(str, Enum):
+    PATIENT = "PATIENT"
+    DOCTOR = "DOCTOR"
+    HOSPITAL_ADMIN = "HOSPITAL_ADMIN"
+    SUPER_ADMIN = "SUPER_ADMIN"
+
+class RegisterRequest(BaseModel):
+    email: EmailStr
+    password: str
+    full_name: str
+    role: UserRole   # ab galat role bhejne pe 422 aayega, silent PATIENT nahi banega
+    hospital_id: int
