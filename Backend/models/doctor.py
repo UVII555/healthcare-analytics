@@ -16,4 +16,4 @@ class DoctorProfile(Base):
     registration_number = Column(Integer, nullable=True)
     consultation_fee = Column(Numeric(10, 2), nullable=True)
     license_number = Column(String(100), unique=True, nullable=True)
-    created_at = Column(DateTime, server_default=func.now())
+    created_at = Column(DateTime, server_default=func.now()
