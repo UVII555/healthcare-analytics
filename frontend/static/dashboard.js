@@ -13,6 +13,9 @@ function authHeaders() {
 
 function logError(msg) {
     const el = document.getElementById('errorLog');
-    
+    const item = document.createElementById('div');
+    item.className = 'error-item';
+    item.textContent = `❌ ${new Date().toLocaleTimeString()} — ${msg}`;
+    el.prepend(item);
 }
 }
