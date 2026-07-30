@@ -1,0 +1,55 @@
+<!-- frontend/dashboard/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedConnect — Hospital Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-left">
+    <span class="logo">🏥 MedConnect</span>
+    <span class="subtitle">Hospital Analytics Dashboard</span>
+  </div>
+  <div class="topbar-right">
+    <label for="tokenInput" class="token-label">Auth Token:</label>
+    <input type="text" id="tokenInput" placeholder="Paste Bearer token here" />
+    <button onclick="saveToken()">Set Token</button>
+    <select id="hospitalFilter">
+      <option value="1">Hospital 1</option>
+      <option value="4">Hospital 4</option>
+      <option value="5" selected>Hospital 5</option>
+      <option value="6">Hospital 6</option>
+    </select>
+    <span id="lastUpdated" class="last-updated">Not loaded yet</span>
+  </div>
+</nav>
+
+<main>
+  <section class="kpi-grid" id="kpiGrid"></section>
+
+  <section class="charts-grid">
+    <div class="chart-card wide">
+      <div class="chart-title">OPD Volume Trend (last 30 days)</div>
+      <canvas id="opdChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Diagnosis Mix (DRG)</div>
+      <canvas id="diagChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Key Metrics Overview</div>
+      <canvas id="metricsChart"></canvas>
+    </div>
+  </section>
+
+  <section id="errorLog" class="error-log"></section>
+</main>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
