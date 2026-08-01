@@ -61,3 +61,30 @@ def compute_drg_mix(db: Session, hospital_id: int) -> dict:
         "labels": [label_map.get(r[0], r[0]) for r in rows],
         "data": [r[1] for r in rows]
     }
+
+def compute_bor(db: Session, hospital_id: int) -> float:
+    """Bed Occupancy Rate %"""
+    occupied = db.execute(text(
+        "SELECT COUNT(*) FROM admissions WHERE hospital_id=:hid AND discharge_date IS NULL"
+    ), {"hid": hospital_id}).scalar() or 0
+    beds = db.execute(text(
+        "SELECT total_beds FROM hospitals WHERE id=:hid"
+    ), {"hid": hospital_id}).scalar() or 1
+    return round((occupied / beds) * 100, 1)
+
+
+def compute_cpv(db: Session, hospital_id: int) -> float:
+    """Cost Per Visit"""
+    r = db.execute(text(
+        "SELECT AVG(treatment_cost) FROM admissions WHERE hospital_id=:hid AND treatment_cost IS NOT NULL"
+    ), {"hid": hospital_id}).scalar()
+    return round(float(r or 0), 2)
+
+
+def compute_revenue(db: Session, hospital_id: int) -> float:
+    """Total revenue this month"""
+    r = db.execute(text("""
+        SELECT SUM(treatment_cost) FROM admissions
+        WHERE hospital_id=:hid AND DATE_TRUNC('month',admission_date)=DATE_TRUNC('month',NOW())
+    """), {"hid": hospital_id}).scalar()
+    return round(float(r or 0), 2)
