@@ -55,7 +55,9 @@ def compute_drg_mix(db: Session, hospital_id: int) -> dict:
     label_map = {
         "A":"Infectious", "C":"Cancer", "I":"Cardiac",
         "J":"Respiratory", "K":"Digestive", "M":"Orthopaedic",
-        "N":"Urinary", "S":"Injury"
+        "N":"Urinary", "S":"Injury",
+        "E": "Endocrine",        # naya
+        "G": "Neurological"     # naya
     }
     return {
         "labels": [label_map.get(r[0], r[0]) for r in rows],
@@ -68,7 +70,7 @@ def compute_bor(db: Session, hospital_id: int) -> float:
         "SELECT COUNT(*) FROM admissions WHERE hospital_id=:hid AND discharge_date IS NULL"
     ), {"hid": hospital_id}).scalar() or 0
     beds = db.execute(text(
-        "SELECT total_beds FROM hospitals WHERE id=:hid"
+        "SELECT total_beds FROM hospitals WHERE hospital_id=:hid"
     ), {"hid": hospital_id}).scalar() or 1
     return round((occupied / beds) * 100, 1)
 
