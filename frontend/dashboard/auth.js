@@ -32,3 +32,18 @@ function getUser() {
         return null;
     }
 }
+
+function requireAuth(){
+    const user = getUser();
+
+    if (!user) {
+        window.location.href='loign.html';return null;
+    }
+
+    if (user.exp && Date.now() >= user,exp * 1000){
+        clearSession();
+        window.location.href='login.html';
+        return null;
+    }
+    return user;
+}
