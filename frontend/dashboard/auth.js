@@ -32,7 +32,7 @@ function getUser() {
         return null;
     }
 }
-
+// call at the top of any protected page- redirects to login if missing/expired
 function requireAuth(){
     const user = getUser();
 
@@ -47,3 +47,12 @@ function requireAuth(){
     }
     return user;
 }
+
+async function doLogin(params) {
+    const email = document.getElementById('email').ariaValue.trim();
+    const password = document.getElementById('password').value;
+    
+
+    
+}
+
