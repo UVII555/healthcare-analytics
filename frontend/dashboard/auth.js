@@ -51,6 +51,17 @@ function requireAuth(){
 async function doLogin(params) {
     const email = document.getElementById('email').ariaValue.trim();
     const password = document.getElementById('password').value;
+    const errEl = document.getElementById('loginError');
+
+    errEl.style.display='none';
+    try{
+        const res = await fetch(`$(API)/auth/login`,{
+            methos: 'Post',
+            headers : {'Content-type': 'application/json' },
+                body: JSON.stringify({email, password}),
+        });
+        
+
     
 
     
