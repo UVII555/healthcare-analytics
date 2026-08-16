@@ -1,20 +1,34 @@
 // frontend/dashboard/dashboard.js — connects to your REAL FastAPI backend
 const API = 'http://127.0.0.1:8000';
-let hospitalId = document.getElementById('hospitalFilter').value;
+// let hospitalId = document.getElementById('hospitalFilter').value;
+// let charts = {};
+
+// // ── AUTH TOKEN (needed only for protected endpoints like /patients) ──
+// function saveToken() {
+//   const token = document.getElementById('tokenInput').value.trim();
+//   localStorage.setItem('medconnect_token', token);
+//   loadAll();
+// }
+// function getToken() { return localStorage.getItem('medconnect_token') || ''; }
+// function authHeaders() {
+//   const token = getToken();
+//   return token ? { 'Authorization': `Bearer ${token}` } : {};
+// }
+
+
+// DELETE these old lines:
+// let hospitalId = document.getElementById('hospitalFilter').value;
+// function saveToken() { ... }
+// function getToken() { ... }
+// function authHeaders() { ... }
+// document.getElementById('hospitalFilter').addEventListener('change', ...)
+// window.addEventListener('DOMContentLoaded', () => { ... tokenInput ... })
+
+// REPLACE with:
+const user = requireAuth();               // from auth.js — redirects to login if not authenticated
+let hospitalId = user.hospital_id;         // scoped from the JWT, not a dropdown
+document.getElementById('hospitalLabel').textContent = `🏥 Hospital ${hospitalId} · ${user.role}`;
 let charts = {};
-
-// ── AUTH TOKEN (needed only for protected endpoints like /patients) ──
-function saveToken() {
-  const token = document.getElementById('tokenInput').value.trim();
-  localStorage.setItem('medconnect_token', token);
-  loadAll();
-}
-function getToken() { return localStorage.getItem('medconnect_token') || ''; }
-function authHeaders() {
-  const token = getToken();
-  return token ? { 'Authorization': `Bearer ${token}` } : {};
-}
-
 // ── ON-SCREEN ERROR LOG (so you see errors without opening DevTools) ──
 function logError(msg) {
   const el = document.getElementById('errorLog');
