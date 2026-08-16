@@ -1,5 +1,10 @@
 // frontend/dashboard/dashboard.js — connects to your REAL FastAPI backend
-const API = 'http://127.0.0.1:8000';
+//
+
+
+//\\\\\const API = 'http://127.0.0.1:8000';///////\\\\
+
+
 // let hospitalId = document.getElementById('hospitalFilter').value;
 // let charts = {};
 
@@ -142,7 +147,8 @@ async function fetchMetricsOverview() {
 async function loadAll() {
   await Promise.all([fetchKPIs(), fetchOPDTrend(), fetchDiagnosisMix(), fetchMetricsOverview()]);
 }
-document.getElementById('hospitalFilter').addEventListener('change', (e) => { hospitalId = e.target.value; loadAll(); });
-window.addEventListener('DOMContentLoaded', () => { const saved = getToken(); if (saved) document.getElementById('tokenInput').value = saved; });
+//document.getElementById('hospitalFilter').addEventListener('change', (e) => { hospitalId = e.target.value; loadAll(); });
+//window.addEventListener('DOMContentLoaded', () => { const saved = getToken(); if (saved) document.getElementById('tokenInput').value = saved; });
+
 loadAll();
 setInterval(loadAll, 30000);
