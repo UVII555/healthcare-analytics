@@ -261,8 +261,8 @@ def run_seed() -> None:
                 patient_id=patient_user.id,
                 doctor_id=doctor_user.id,
                 department_id=dept.id,
-                appointment_date=appt_date.date(),
-                time_slot=time(hour=random.randint(9, 17), minute=random.choice([0, 15, 30, 45])),
+                appointment_date=check_in.date(),   # ✅ derived from check_in — can never mismatch
+                time_slot=check_in.time(),          # ✅ derived from check_in — matches reality instead of a random unrelated slot
                 token_number=i % 30 + 1,
                 booked_at=booked_at,
                 check_in_time=check_in,

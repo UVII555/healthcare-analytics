@@ -21,6 +21,7 @@ def compute_awt(db: Session, hospital_id: int)-> float:
     AND doctor_start_time is NOT NULL AND check_in_time IS NOT NULL """),
     {"hid": hospital_id}).scalar()
     return round(float(r or 0), 1)
+    
 
 
 def compute_opd_load(db: Session, hospital_id: int) -> float:

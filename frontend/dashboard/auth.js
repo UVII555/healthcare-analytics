@@ -52,11 +52,12 @@ async function doLogin() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     });
-    if (!res.ok) throw new Error('bad credentials');
+    if (!res.ok) throw new Error(`Login failed: ${res.status}`);
     const data = await res.json();
     saveSession(data.access_token);
     window.location.href = 'index.html';
   } catch (e) {
+    errEl.textContent = e.message;   // shows the real status instead of always "Invalid email or password"
     errEl.style.display = 'block';
   }
 }
