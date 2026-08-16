@@ -60,10 +60,20 @@ async function doLogin(params) {
             headers : {'Content-type': 'application/json' },
                 body: JSON.stringify({email, password}),
         });
-        
+
+        if (!res.ok) throw new Error('bad credentials');
+        const data = await res.json();
+        saveSession(data.access_token);
+        window.location.href = 'index.html';
+    } catch (e) { errEl.style.display = 'block';}
+
 
     
 
     
+}
+
+function logout() {
+    clearSession(); window.location.href='login.html';
 }
 
