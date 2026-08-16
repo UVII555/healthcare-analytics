@@ -16,7 +16,13 @@
     <span class="subtitle">Hospital Analytics Dashboard</span>
   </div>
   <div class="topbar-right">
-    <label for="tokenInput" class="token-label">Auth Token:</label>
+  <span id ="hospitalLabel" class="last-updated"></span>
+<span id = "lastUpdated" class="last-updated">Not loaded yet</span>
+<button onclick="logout()">Logout</button>  
+  </div> 
+
+
+<!-- <label for="tokenInput" class="token-label">Auth Token:</label>
     <input type="text" id="tokenInput" placeholder="Paste Bearer token here" />
     <button onclick="saveToken()">Set Token</button>
     <select id="hospitalFilter">
@@ -26,7 +32,7 @@
       <option value="4">Hospital 4</option>
       <option value="5" selected>Hospital 5</option>
       <option value="6">Hospital 6</option>
-    </select>
+    </select> -->
     <span id="lastUpdated" class="last-updated">Not loaded yet</span>
   </div>
 </nav>
