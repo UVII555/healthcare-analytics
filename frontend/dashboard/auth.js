@@ -66,6 +66,7 @@ async function doLogin() {
 function logout() {
   clearSession();
   window.location.href = 'login.html';
+}
 
 
 // function logout(){
