@@ -32,4 +32,4 @@ def get_db():
     try:
         yield db  # Hand the database session over to the calling router
     finally:
-        db.close(  # Automatically runs after the API response is sent
+        db.close()  # Automatically runs after the API response is sent
