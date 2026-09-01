@@ -101,5 +101,5 @@ app.include_router(lookups.router)
 
 #from backend.routers import analytics
 
-app.include_router(analytics.router)
+app.include_router(analytics.router
 #app.include_router(analytics.router)
